@@ -10,6 +10,7 @@ export default function HomePage() {
   const [clientName, setClientName] = useState('');
   const [invoiceItems, setInvoiceItems] = useState([{ description: '', amount: '' }]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currency, setCurrency] = useState("USD"); // default currency
 
   const handleLogoUpload = (e) => {
     const file = e.target.files[0];
@@ -34,7 +35,6 @@ export default function HomePage() {
 
   const handlePreview = (e) => {
     e.preventDefault();
-    // Optionally validate your data before opening the modal
     setIsModalOpen(true);
   };
 
@@ -80,6 +80,33 @@ export default function HomePage() {
           />
         </div>
 
+        {/* Currency Segmented Control */}
+        <div className="flex items-center space-x-4">
+          <span className="text-lg font-medium">Currency:</span>
+          <button
+            type="button"
+            onClick={() => setCurrency("USD")}
+            className={`px-4 py-2 rounded-full transition-colors ${
+              currency === "USD"
+                ? "bg-blue-600 text-white"
+                : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+            }`}
+          >
+            USD
+          </button>
+          <button
+            type="button"
+            onClick={() => setCurrency("GHS")}
+            className={`px-4 py-2 rounded-full transition-colors ${
+              currency === "GHS"
+                ? "bg-blue-600 text-white"
+                : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+            }`}
+          >
+            GHS
+          </button>
+        </div>
+
         {/* Invoice Items */}
         <div>
           <h2 className="text-2xl font-light mb-4">Invoice Items</h2>
@@ -112,7 +139,7 @@ export default function HomePage() {
           </button>
         </div>
 
-        {/* This button now solely triggers the modal */}
+        {/* Preview Invoice Button */}
         <button
           type="submit"
           className="w-full py-3 bg-blue-600 text-white rounded-full shadow hover:bg-blue-700 transition-colors"
@@ -121,12 +148,13 @@ export default function HomePage() {
         </button>
       </form>
 
-      {/* Modal for Invoice Preview */}
+      {/* Invoice Preview Modal */}
       <InvoiceModal open={isModalOpen} onOpenChange={setIsModalOpen}>
         <InvoicePreview 
           logo={logoPreview} 
           clientName={clientName} 
           items={invoiceItems} 
+          currency={currency}
         />
       </InvoiceModal>
     </div>
