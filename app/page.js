@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import InvoiceModal from '../components/InvoiceModal';
 import InvoicePreview from '../components/InvoicePreview';
+import { formatNumber, unformatNumber } from '../utils/formatNumber';
 
 export default function HomePage() {
   const [logoPreview, setLogoPreview] = useState(null);
@@ -11,6 +12,24 @@ export default function HomePage() {
   const [invoiceItems, setInvoiceItems] = useState([{ description: '', amount: '' }]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currency, setCurrency] = useState("USD"); // default currency
+  const [senderDetails, setSenderDetails] = useState({
+    name: '',
+    email: '',
+    address: '',
+    phone: ''
+  });
+  const [invoiceDetails, setInvoiceDetails] = useState({
+    invoiceNumber: generateInvoiceNumber(),
+    issueDate: new Date().toISOString().split('T')[0],
+    dueDate: '',
+    paymentTerms: 'Net 30'
+  });
+  const [clientDetails, setClientDetails] = useState({
+    name: '',
+    email: '',
+    address: '',
+    phone: ''
+  });
 
   const handleLogoUpload = (e) => {
     const file = e.target.files[0];
@@ -25,7 +44,12 @@ export default function HomePage() {
 
   const handleItemChange = (index, field, value) => {
     const newItems = [...invoiceItems];
-    newItems[index][field] = value;
+    if (field === 'amount') {
+      // Format the number as the user types
+      newItems[index][field] = formatNumber(value);
+    } else {
+      newItems[index][field] = value;
+    }
     setInvoiceItems(newItems);
   };
 
@@ -38,10 +62,61 @@ export default function HomePage() {
     setIsModalOpen(true);
   };
 
+  const handleSenderChange = (field, value) => {
+    setSenderDetails(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleClientChange = (field, value) => {
+    setClientDetails(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
   return (
-    <div className="bg-white rounded-3xl shadow-2xl p-10 max-w-3xl w-full">
+    <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-10 w-full">
       <h1 className="text-4xl font-light text-center mb-10">Invoice Generator</h1>
       <form onSubmit={handlePreview} className="space-y-8">
+        {/* Sender Details */}
+        <div className="space-y-4">
+          <h2 className="text-2xl font-light mb-4">Your Details</h2>
+          <input
+            type="text"
+            placeholder="Your Name/Company Name"
+            value={senderDetails.name}
+            onChange={(e) => handleSenderChange('name', e.target.value)}
+            required
+            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="email"
+            placeholder="Your Email"
+            value={senderDetails.email}
+            onChange={(e) => handleSenderChange('email', e.target.value)}
+            required
+            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="text"
+            placeholder="Your Address"
+            value={senderDetails.address}
+            onChange={(e) => handleSenderChange('address', e.target.value)}
+            required
+            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="tel"
+            placeholder="Your Phone"
+            value={senderDetails.phone}
+            onChange={(e) => handleSenderChange('phone', e.target.value)}
+            required
+            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
         {/* Logo Upload */}
         <div>
           <label className="block text-lg font-medium mb-2">Upload Logo:</label>
@@ -68,14 +143,36 @@ export default function HomePage() {
           )}
         </div>
 
-        {/* Client Name */}
-        <div>
-          <label className="block text-lg font-medium mb-2">Client Name:</label>
+        {/* Client Details */}
+        <div className="space-y-4">
+          <h2 className="text-2xl font-light mb-4">Client Details</h2>
           <input
             type="text"
-            value={clientName}
-            onChange={(e) => setClientName(e.target.value)}
+            placeholder="Client Name/Company Name"
+            value={clientDetails.name}
+            onChange={(e) => handleClientChange('name', e.target.value)}
             required
+            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="email"
+            placeholder="Client Email"
+            value={clientDetails.email}
+            onChange={(e) => handleClientChange('email', e.target.value)}
+            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="text"
+            placeholder="Client Address"
+            value={clientDetails.address}
+            onChange={(e) => handleClientChange('address', e.target.value)}
+            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="tel"
+            placeholder="Client Phone"
+            value={clientDetails.phone}
+            onChange={(e) => handleClientChange('phone', e.target.value)}
             className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -121,7 +218,7 @@ export default function HomePage() {
                 className="flex-1 p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2 sm:mb-0"
               />
               <input
-                type="number"
+                type="text"
                 placeholder="Amount"
                 value={item.amount}
                 onChange={(e) => handleItemChange(index, 'amount', e.target.value)}
@@ -139,6 +236,55 @@ export default function HomePage() {
           </button>
         </div>
 
+        {/* Invoice Details */}
+        <div className="space-y-4">
+          <h2 className="text-2xl font-light mb-4">Invoice Details</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">Invoice Number</label>
+              <input
+                type="text"
+                value={invoiceDetails.invoiceNumber}
+                readOnly
+                className="w-full p-3 border rounded-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Issue Date</label>
+              <input
+                type="date"
+                value={invoiceDetails.issueDate}
+                onChange={(e) => setInvoiceDetails(prev => ({...prev, issueDate: e.target.value}))}
+                required
+                className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Payment Terms</label>
+              <select
+                value={invoiceDetails.paymentTerms}
+                onChange={(e) => setInvoiceDetails(prev => ({...prev, paymentTerms: e.target.value}))}
+                className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="Net 30">Net 30</option>
+                <option value="Net 15">Net 15</option>
+                <option value="Net 7">Net 7</option>
+                <option value="Due on Receipt">Due on Receipt</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Due Date</label>
+              <input
+                type="date"
+                value={invoiceDetails.dueDate}
+                onChange={(e) => setInvoiceDetails(prev => ({...prev, dueDate: e.target.value}))}
+                required
+                className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+        </div>
+
         {/* Preview Invoice Button */}
         <button
           type="submit"
@@ -152,11 +298,20 @@ export default function HomePage() {
       <InvoiceModal open={isModalOpen} onOpenChange={setIsModalOpen}>
         <InvoicePreview 
           logo={logoPreview} 
-          clientName={clientName} 
+          clientDetails={clientDetails}
           items={invoiceItems} 
           currency={currency}
+          senderDetails={senderDetails}
+          invoiceDetails={invoiceDetails}
         />
       </InvoiceModal>
     </div>
   );
+}
+
+function generateInvoiceNumber() {
+  const prefix = 'INV';
+  const timestamp = Date.now().toString().slice(-6);
+  const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+  return `${prefix}-${timestamp}-${random}`;
 }
