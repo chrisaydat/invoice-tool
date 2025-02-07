@@ -50,7 +50,7 @@ ${senderDetails.name}`;
 
   return (
     <div className="space-y-8">
-      <div ref={invoiceRef} className="bg-white rounded-2xl shadow p-8 text-black invoice-content">
+      <div ref={invoiceRef} className="bg-white rounded-2xl shadow p-8 text-black dark:text-black dark:bg-white invoice-content">
         {/* Header Section */}
         <div className="flex justify-between items-start mb-8">
           {logo && (
@@ -61,16 +61,16 @@ ${senderDetails.name}`;
             />
           )}
           <div className="text-right">
-            <h1 className="text-3xl font-semibold text-gray-800">INVOICE</h1>
-            <p className="text-gray-600">#{invoiceDetails.invoiceNumber}</p>
+            <h1 className="text-3xl font-semibold text-gray-800 dark:text-gray-800">INVOICE</h1>
+            <p className="text-gray-600 dark:text-gray-600">#{invoiceDetails.invoiceNumber}</p>
           </div>
         </div>
 
         {/* Sender and Client Details */}
         <div className="flex justify-between mb-8">
           <div className="w-1/2">
-            <h3 className="text-xl font-semibold mb-2">From:</h3>
-            <div className="text-gray-700">
+            <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-800">From:</h3>
+            <div className="text-gray-700 dark:text-gray-700">
               <p className="font-medium">{senderDetails.name}</p>
               <p>{senderDetails.address}</p>
               <p>{senderDetails.email}</p>
@@ -78,8 +78,8 @@ ${senderDetails.name}`;
             </div>
           </div>
           <div className="w-1/2 text-right">
-            <h3 className="text-xl font-semibold mb-2">To:</h3>
-            <div className="text-gray-700">
+            <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-800">To:</h3>
+            <div className="text-gray-700 dark:text-gray-700">
               <p className="font-medium">{clientDetails.name}</p>
               <p>{clientDetails.address}</p>
               <p>{clientDetails.email}</p>
@@ -89,19 +89,19 @@ ${senderDetails.name}`;
         </div>
 
         {/* Invoice Details */}
-        <div className="bg-gray-50 rounded-xl p-6 mb-8">
+        <div className="bg-gray-50 dark:bg-gray-50 rounded-xl p-6 mb-8">
           <div className="grid grid-cols-2 gap-6">
             <div>
-              <p className="text-sm text-gray-600">Issue Date</p>
-              <p className="font-medium">{new Date(invoiceDetails.issueDate).toLocaleDateString()}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-600">Issue Date</p>
+              <p className="font-medium text-gray-800 dark:text-gray-800">{new Date(invoiceDetails.issueDate).toLocaleDateString()}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-600">Due Date</p>
-              <p className="font-medium">{new Date(invoiceDetails.dueDate).toLocaleDateString()}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-600">Due Date</p>
+              <p className="font-medium text-gray-800 dark:text-gray-800">{new Date(invoiceDetails.dueDate).toLocaleDateString()}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-600">Payment Terms</p>
-              <p className="font-medium">{invoiceDetails.paymentTerms}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-600">Payment Terms</p>
+              <p className="font-medium text-gray-800 dark:text-gray-800">{invoiceDetails.paymentTerms}</p>
             </div>
           </div>
         </div>
@@ -111,22 +111,22 @@ ${senderDetails.name}`;
           <table className="w-full">
             <thead>
               <tr className="border-b">
-                <th className="text-left py-2">Description</th>
-                <th className="text-right py-2">Amount</th>
+                <th className="text-left py-2 text-gray-800 dark:text-gray-800">Description</th>
+                <th className="text-right py-2 text-gray-800 dark:text-gray-800">Amount</th>
               </tr>
             </thead>
             <tbody>
               {items.map((item, index) => (
                 <tr key={index} className="border-b">
-                  <td className="py-2">{item.description}</td>
-                  <td className="text-right py-2">
+                  <td className="py-2 text-gray-800 dark:text-gray-800">{item.description}</td>
+                  <td className="text-right py-2 text-gray-800 dark:text-gray-800">
                     {currencySymbols[currency]}{formatNumber(parseFloat(unformatNumber(item.amount || '0')).toFixed(2))}
                   </td>
                 </tr>
               ))}
               <tr className="font-semibold">
-                <td className="py-4">Total</td>
-                <td className="text-right py-4">
+                <td className="py-4 text-gray-800 dark:text-gray-800">Total</td>
+                <td className="text-right py-4 text-gray-800 dark:text-gray-800">
                   {currencySymbols[currency]}{formatNumber(total.toFixed(2))}
                 </td>
               </tr>
@@ -135,10 +135,8 @@ ${senderDetails.name}`;
         </div>
 
         {/* Footer */}
-        <div className="text-center text-gray-500 text-sm mt-12">
-          <p>This invoice was generated by invoice.aydat.org</p>
-          <p>An aydat dot org project</p>
-          
+        <div className="text-center text-gray-500 dark:text-gray-500 text-sm mt-12">
+          <p>Generated by Aydat.org</p>
         </div>
       </div>
 

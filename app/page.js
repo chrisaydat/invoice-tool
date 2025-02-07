@@ -77,7 +77,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-10 w-full">
+    <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-6 md:p-10 w-full">
       <h1 className="text-4xl font-light text-center mb-10">Invoice Generator</h1>
       <form onSubmit={handlePreview} className="space-y-8">
         {/* Sender Details */}
@@ -89,7 +89,7 @@ export default function HomePage() {
             value={senderDetails.name}
             onChange={(e) => handleSenderChange('name', e.target.value)}
             required
-            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
           <input
             type="email"
@@ -97,7 +97,7 @@ export default function HomePage() {
             value={senderDetails.email}
             onChange={(e) => handleSenderChange('email', e.target.value)}
             required
-            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
           <input
             type="text"
@@ -105,7 +105,7 @@ export default function HomePage() {
             value={senderDetails.address}
             onChange={(e) => handleSenderChange('address', e.target.value)}
             required
-            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
           <input
             type="tel"
@@ -113,7 +113,7 @@ export default function HomePage() {
             value={senderDetails.phone}
             onChange={(e) => handleSenderChange('phone', e.target.value)}
             required
-            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
         </div>
 
@@ -152,28 +152,28 @@ export default function HomePage() {
             value={clientDetails.name}
             onChange={(e) => handleClientChange('name', e.target.value)}
             required
-            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
           <input
             type="email"
             placeholder="Client Email"
             value={clientDetails.email}
             onChange={(e) => handleClientChange('email', e.target.value)}
-            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
           <input
             type="text"
             placeholder="Client Address"
             value={clientDetails.address}
             onChange={(e) => handleClientChange('address', e.target.value)}
-            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
           <input
             type="tel"
             placeholder="Client Phone"
             value={clientDetails.phone}
             onChange={(e) => handleClientChange('phone', e.target.value)}
-            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
         </div>
 
@@ -215,7 +215,7 @@ export default function HomePage() {
                 value={item.description}
                 onChange={(e) => handleItemChange(index, 'description', e.target.value)}
                 required
-                className="flex-1 p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2 sm:mb-0"
+                className="flex-1 p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-2 sm:mb-0"
               />
               <input
                 type="text"
@@ -223,7 +223,7 @@ export default function HomePage() {
                 value={item.amount}
                 onChange={(e) => handleItemChange(index, 'amount', e.target.value)}
                 required
-                className="w-full sm:w-40 p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full sm:w-40 p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               />
             </div>
           ))}
@@ -246,7 +246,7 @@ export default function HomePage() {
                 type="text"
                 value={invoiceDetails.invoiceNumber}
                 readOnly
-                className="w-full p-3 border rounded-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 border rounded-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               />
             </div>
             <div>
@@ -256,7 +256,7 @@ export default function HomePage() {
                 value={invoiceDetails.issueDate}
                 onChange={(e) => setInvoiceDetails(prev => ({...prev, issueDate: e.target.value}))}
                 required
-                className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               />
             </div>
             <div>
@@ -264,7 +264,7 @@ export default function HomePage() {
               <select
                 value={invoiceDetails.paymentTerms}
                 onChange={(e) => setInvoiceDetails(prev => ({...prev, paymentTerms: e.target.value}))}
-                className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               >
                 <option value="Net 30">Net 30</option>
                 <option value="Net 15">Net 15</option>
@@ -279,7 +279,7 @@ export default function HomePage() {
                 value={invoiceDetails.dueDate}
                 onChange={(e) => setInvoiceDetails(prev => ({...prev, dueDate: e.target.value}))}
                 required
-                className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               />
             </div>
           </div>
